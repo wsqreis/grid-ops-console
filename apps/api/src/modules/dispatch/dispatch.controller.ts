@@ -6,9 +6,7 @@ import { DispatchService } from "./dispatch.service.js";
 @ApiTags("dispatch")
 @Controller("dispatch-events")
 export class DispatchController {
-  constructor(
-    @Inject(DispatchService) private readonly dispatchService: DispatchService,
-  ) {}
+  constructor(@Inject(DispatchService) private readonly dispatchService: DispatchService) {}
 
   @Get()
   listEvents() {

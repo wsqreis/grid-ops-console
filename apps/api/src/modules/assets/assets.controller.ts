@@ -5,9 +5,7 @@ import { AssetsService } from "./assets.service.js";
 @ApiTags("assets")
 @Controller("assets")
 export class AssetsController {
-  constructor(
-    @Inject(AssetsService) private readonly assetsService: AssetsService,
-  ) {}
+  constructor(@Inject(AssetsService) private readonly assetsService: AssetsService) {}
 
   @Get()
   listAssets() {

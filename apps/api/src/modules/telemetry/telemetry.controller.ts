@@ -6,10 +6,7 @@ import { TelemetryService } from "./telemetry.service.js";
 @ApiTags("telemetry")
 @Controller("telemetry")
 export class TelemetryController {
-  constructor(
-    @Inject(TelemetryService)
-    private readonly telemetryService: TelemetryService,
-  ) {}
+  constructor(@Inject(TelemetryService) private readonly telemetryService: TelemetryService) {}
 
   @Get(":assetId")
   getReadings(@Param("assetId") assetId: string) {
