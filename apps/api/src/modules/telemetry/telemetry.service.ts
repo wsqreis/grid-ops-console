@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import type { TelemetryReading } from "@grid-ops/shared";
 import { AssetsService } from "../assets/assets.service.js";
 import type { IngestTelemetryDto } from "./dto/ingest-telemetry.dto.js";
@@ -7,7 +7,7 @@ import type { IngestTelemetryDto } from "./dto/ingest-telemetry.dto.js";
 export class TelemetryService {
   private readonly readings = new Map<string, TelemetryReading[]>();
 
-  constructor(private readonly assetsService: AssetsService) {}
+  constructor(@Inject(AssetsService) private readonly assetsService: AssetsService) {}
 
   getForAsset(assetId: string) {
     this.assetsService.getById(assetId);
@@ -38,4 +38,3 @@ export class TelemetryService {
     return readings;
   }
 }
-

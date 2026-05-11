@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { randomUUID } from "node:crypto";
 import { trace } from "@opentelemetry/api";
 import type { DispatchEvent, GridAsset } from "@grid-ops/shared";
@@ -10,7 +10,7 @@ export class DispatchService {
   private readonly tracer = trace.getTracer("grid-ops-api");
   private readonly events: DispatchEvent[] = [];
 
-  constructor(private readonly assetsService: AssetsService) {}
+  constructor(@Inject(AssetsService) private readonly assetsService: AssetsService) {}
 
   list() {
     return this.events;

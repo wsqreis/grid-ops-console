@@ -1,11 +1,13 @@
-import { Controller, Get, Param } from "@nestjs/common";
+import { Controller, Get, Inject, Param } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { AssetsService } from "./assets.service.js";
 
 @ApiTags("assets")
 @Controller("assets")
 export class AssetsController {
-  constructor(private readonly assetsService: AssetsService) {}
+  constructor(
+    @Inject(AssetsService) private readonly assetsService: AssetsService,
+  ) {}
 
   @Get()
   listAssets() {
@@ -22,4 +24,3 @@ export class AssetsController {
     return this.assetsService.getById(id);
   }
 }
-

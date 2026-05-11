@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Inject, Param, Post } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { IngestTelemetryDto } from "./dto/ingest-telemetry.dto.js";
 import { TelemetryService } from "./telemetry.service.js";
@@ -6,7 +6,10 @@ import { TelemetryService } from "./telemetry.service.js";
 @ApiTags("telemetry")
 @Controller("telemetry")
 export class TelemetryController {
-  constructor(private readonly telemetryService: TelemetryService) {}
+  constructor(
+    @Inject(TelemetryService)
+    private readonly telemetryService: TelemetryService,
+  ) {}
 
   @Get(":assetId")
   getReadings(@Param("assetId") assetId: string) {
@@ -18,4 +21,3 @@ export class TelemetryController {
     return this.telemetryService.ingest(dto);
   }
 }
-

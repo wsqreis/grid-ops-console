@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Inject, Param, Post } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { CreateDispatchDto } from "./dto/create-dispatch.dto.js";
 import { DispatchService } from "./dispatch.service.js";
@@ -6,7 +6,9 @@ import { DispatchService } from "./dispatch.service.js";
 @ApiTags("dispatch")
 @Controller("dispatch-events")
 export class DispatchController {
-  constructor(private readonly dispatchService: DispatchService) {}
+  constructor(
+    @Inject(DispatchService) private readonly dispatchService: DispatchService,
+  ) {}
 
   @Get()
   listEvents() {
@@ -23,4 +25,3 @@ export class DispatchController {
     return this.dispatchService.create(dto);
   }
 }
-
