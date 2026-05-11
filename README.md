@@ -30,3 +30,20 @@ npm run dev
 
 The API runs on `http://localhost:4000` and the web app runs on `http://localhost:5173` during development.
 
+## Runtime
+
+The service can also run as containers:
+
+```bash
+docker compose up --build
+```
+
+The containerized web app is available at `http://localhost:8080`, with API requests proxied through the web server.
+
+## Delivery
+
+The repository includes:
+
+- GitLab CI checks for type safety, tests, production builds, and container image builds.
+- Kubernetes manifests with readiness and liveness probes.
+- OpenTelemetry trace export wiring for the API and a collector config for local trace inspection.

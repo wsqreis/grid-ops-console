@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import "./instrumentation.js";
 import { ValidationPipe } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
@@ -29,4 +30,3 @@ const bootstrap = async () => {
 };
 
 void bootstrap();
-

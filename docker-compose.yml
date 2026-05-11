@@ -1,0 +1,36 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    environment:
+      PORT: 4000
+      OTEL_SERVICE_NAME: grid-ops-api
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+    ports:
+      - "4000:4000"
+    depends_on:
+      - otel-collector
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:4000/api/health"]
+      interval: 15s
+      timeout: 3s
+      retries: 5
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.139.0
+    command: ["--config=/etc/otelcol/config.yml"]
+    volumes:
+      - ./observability/otel-collector.yml:/etc/otelcol/config.yml:ro
+    ports:
+      - "4318:4318"
+
