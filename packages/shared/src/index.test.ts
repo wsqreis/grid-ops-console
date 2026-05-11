@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calculateFleetSummary, type GridAsset } from "./index";
+import { calculateFleetSummary, type GridAsset } from "./index.js";
 
 const asset = (overrides: Partial<GridAsset>): GridAsset => ({
   id: "asset-1",
@@ -43,4 +43,3 @@ describe("calculateFleetSummary", () => {
     });
   });
 });
-
