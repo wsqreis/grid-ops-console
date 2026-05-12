@@ -1,4 +1,5 @@
-import { describe, expect, it } from "vitest";
+import assert from "node:assert/strict";
+import test from "node:test";
 import { calculateFleetSummary, type GridAsset } from "./index.js";
 
 const asset = (overrides: Partial<GridAsset>): GridAsset => ({
@@ -14,32 +15,30 @@ const asset = (overrides: Partial<GridAsset>): GridAsset => ({
   ...overrides,
 });
 
-describe("calculateFleetSummary", () => {
-  it("summarises capacity, availability, and response posture", () => {
-    const summary = calculateFleetSummary([
-      asset({ id: "asset-1" }),
-      asset({
-        id: "asset-2",
-        status: "responding",
-        capacityKw: 500,
-        availableKw: 125,
-        responseTimeMs: 70,
-      }),
-      asset({
-        id: "asset-3",
-        status: "offline",
-        capacityKw: 250,
-        availableKw: 0,
-        responseTimeMs: 200,
-      }),
-    ]);
+test("calculateFleetSummary summarises capacity, availability, and response posture", () => {
+  const summary = calculateFleetSummary([
+    asset({ id: "asset-1" }),
+    asset({
+      id: "asset-2",
+      status: "responding",
+      capacityKw: 500,
+      availableKw: 125,
+      responseTimeMs: 70,
+    }),
+    asset({
+      id: "asset-3",
+      status: "offline",
+      capacityKw: 250,
+      availableKw: 0,
+      responseTimeMs: 200,
+    }),
+  ]);
 
-    expect(summary).toEqual({
-      totalCapacityKw: 1750,
-      availableKw: 825,
-      onlineAssets: 1,
-      respondingAssets: 1,
-      averageResponseTimeMs: 80,
-    });
+  assert.deepStrictEqual(summary, {
+    totalCapacityKw: 1750,
+    availableKw: 825,
+    onlineAssets: 1,
+    respondingAssets: 1,
+    averageResponseTimeMs: 80,
   });
 });
